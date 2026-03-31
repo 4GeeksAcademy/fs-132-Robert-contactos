@@ -1,0 +1,9 @@
+body {
+background: rgb(180, 180, 180);
+}
+.avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+}
