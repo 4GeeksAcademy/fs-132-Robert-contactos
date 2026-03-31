@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import contactApi from "../services/contactApi";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import Swal from "sweetalert2";
 
 const EditContact = () => {
     const navigate = useNavigate();
@@ -54,7 +55,14 @@ const EditContact = () => {
                 payload: { Data: freshData }
             });
 
-            alert("¡Contact update correct!");
+            await Swal.fire({
+                title: "¡Ready!",
+                text: "The changes were saved successfully.",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
+
+            // Después de presionar OK, navegamos
             navigate('/contacts');
         } catch (error) {
             console.error(error);
@@ -71,51 +79,51 @@ const EditContact = () => {
             <div className="container mt-5 d-flex justify-content-center">
                 <div className="w-50">
 
-                <h1>Editar Contacto</h1>
-                <form onSubmit={handleSubmit} className="mt-4">
-                    <input
-                        type="text"
-                        className="form-control mb-2"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Nombre"
-                        required
+                    <h1>Editar Contacto</h1>
+                    <form onSubmit={handleSubmit} className="mt-4">
+                        <input
+                            type="text"
+                            className="form-control mb-2"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Nombre"
+                            required
                         />
-                    <input type="text"
-                        className="form-control mb-2"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="Teléfono"
+                        <input type="text"
+                            className="form-control mb-2"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="Teléfono"
                         />
-                    <input
-                        type="email"
-                        className="form-control mb-2"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="Email"
+                        <input
+                            type="email"
+                            className="form-control mb-2"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="Email"
                         />
-                    <input type="text"
-                        className="form-control mb-2"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        placeholder="Dirección"
+                        <input type="text"
+                            className="form-control mb-2"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            placeholder="Dirección"
                         />
-                    <div className="d-flex gap-3">
-                        <button type="submit" className="btn btn-primary">saved changes</button>
-                        <button
-                            type="button"
-                            className="btn btn-secondary"
-                            onClick={() => navigate('/contacts')}
+                        <div className="d-flex gap-3">
+                            <button type="submit" className="btn btn-primary">save changes</button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => navigate('/')}
                             >
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-                            </div>
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div >
     );

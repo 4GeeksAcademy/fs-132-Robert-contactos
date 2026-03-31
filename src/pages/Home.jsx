@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useEffect, useState } from "react";
 import contactApi from "../services/contactApi.js";
-import Card from "../components/Card";
 import { getImage } from "../utils/utilsContactList.js";
+import Swal from "sweetalert2";
 
 export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
-	 const [img,setImg] = useState('')
+	const [img, setImg] = useState('')
 
-    useEffect(()=> {
-        setImg(getImage())
-    },[])
+	useEffect(() => {
+		setImg(getImage())
+	}, [])
 
 	// store --> estado global (variables globales dentro de un objeto)
 	// dispatch --> modificador del estado global (funciones dentro de un switch)
@@ -32,7 +32,23 @@ export const Home = () => {
 	const lastContact = store.contactsData?.contacts?.length > 0
 		? [...store.contactsData.contacts].sort((a, b) => b.id - a.id)[0]
 		: null;
-
+	const handleDelete = (id, name) => {
+		Swal.fire({
+			title: "Alert",
+			text: ` Are you sure for delete this ${name}?`,
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Yes",
+			cancelButtonText: "No"
+		}).then(async (res) => {
+			if (res.isConfirmed) {
+				const resp = await contactApi.deleteContact(id);
+				if (resp === true) {
+					loadContacts();
+				}
+			}
+		});
+	};
 	return (
 		<div className="container mt-5">
 			<div className="text-center mb-5">
@@ -47,17 +63,17 @@ export const Home = () => {
 							<div className="card-body p-5">
 								<div className="d-flex align-items-center gap-5">
 									{/* Avatar*/}
-									<img className="avatar" src={img}  />
+									<img className="avatar" src={img} />
 
 									{/* Información del contacto */}
 									<div className="flex-grow-1">
 										<h2 className="fw-bold mb-4">
-											{lastContact.full_name || lastContact.name || "Sin nombre"}
+											{lastContact.full_name || lastContact.name || "Need Name "}
 										</h2>
 
 										<div className="fs-5">
 											<p className="mb-3">
-												<strong>📞 Teléfono:</strong> {lastContact.phone || "No registrado"}
+												<strong>📞 Phone:</strong> {lastContact.phone || "no register yet"}
 											</p>
 											{lastContact.email && (
 												<p className="mb-3">
@@ -66,7 +82,7 @@ export const Home = () => {
 											)}
 											{lastContact.address && (
 												<p className="mb-0">
-													<strong>📍 Dirección:</strong> {lastContact.address}
+													<strong>📍 Address:</strong> {lastContact.address}
 												</p>
 											)}
 										</div>
@@ -78,18 +94,18 @@ export const Home = () => {
 												state={{ id: lastContact.id }}
 												className="btn btn-success btn-lg px-4"
 											>
-												✏️ Editar
+												✏️ Edit
 											</Link>
 											<button
 												className="btn btn-danger btn-lg px-4"
-												onClick={async () => {
-													if (window.confirm(`¿Eliminar a ${lastContact.full_name || lastContact.name}?`)) {
-														await contactApi.deleteContact(lastContact.id);
-														loadContacts();
-													}
-												}}
+												onClick={() =>
+													handleDelete(
+														lastContact.id,
+														lastContact.full_name || lastContact.name
+													)
+												}
 											>
-												🗑 Eliminar
+												🗑 Delete
 											</button>
 										</div>
 									</div>
@@ -109,8 +125,9 @@ export const Home = () => {
 						</div>
 					</div>
 				</div>
-			)}
-		</div>
+			)
+			}
+		</div >
 
 	);
 }; 

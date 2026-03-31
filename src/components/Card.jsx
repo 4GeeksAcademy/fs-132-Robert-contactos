@@ -27,7 +27,6 @@ const Card = ({ name, phone, email, address, contid, onDelete }) => {
     };
 
     const handleDelete = async () => {
-        // if (!window.confirm("¿Estás seguro de eliminar este contacto?")) return;
         Swal.fire({
             title: "Alert",
             text: "Are you sure for delete this contact?",
@@ -46,16 +45,6 @@ const Card = ({ name, phone, email, address, contid, onDelete }) => {
         })
 
     };
-    // const handleDelete = async () => {
-    //     if (!window.confirm("¿Estás seguro de eliminar este contacto?")) return;
-
-    //     const success = await contactApi.deleteContact(contid);
-    //     console.log('success es', success)
-    //     if (success) {
-    //         onDelete(); // refresca la lista en Home
-    //     }
-    // };
-
 
     return (
         <div className="col-md-4 mb-3">
@@ -69,10 +58,10 @@ const Card = ({ name, phone, email, address, contid, onDelete }) => {
                 </div>
                 <div className="card-footer d-flex gap-2">
                     <button className="btn btn-success flex-fill" onClick={handleEdit}>
-                        ✏️ Editar
+                        ✏️ Edit
                     </button>
                     <button className="btn btn-danger flex-fill" onClick={handleDelete}>
-                        🗑 Eliminar
+                        🗑 Delete
                     </button>
                 </div>
             </div>

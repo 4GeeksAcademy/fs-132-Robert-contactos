@@ -17,11 +17,9 @@ contactApi.getUser = async () => {
 contactApi.getAgenda = async () => {
     try {
         const resp = await fetch(url + '/agendas/Robert')
-        console.log(resp.status)
         if (resp.status == 404) return contactApi.createAgenda();
         if (!resp.ok) throw new Error('something no works')
         const data = await resp.json()
-        console.log(data)
         return data
     } catch (error) {
         console.log(error)
@@ -46,7 +44,7 @@ contactApi.createAgenda = async () => {
 
 contactApi.createContact = async (newContact) => {
     try {
-        const resp = await fetch(url+'/agendas/Robert/contacts', {
+        const resp = await fetch(url + '/agendas/Robert/contacts', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -58,42 +56,42 @@ contactApi.createContact = async (newContact) => {
         return data
     } catch (error) {
         console.log(error)
-    }   
+    }
 }
 
-contactApi.editContact = async (id,contactInfo) => {
-   try {
-    const resp =await fetch(url+`/agendas/Robert/contacts/${id}`, {
-        method: "PUT",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            ...contactInfo,
-            full_name: contactInfo.name || contactInfo.full_name
+contactApi.editContact = async (id, contactInfo) => {
+    try {
+        const resp = await fetch(url + `/agendas/Robert/contacts/${id}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...contactInfo,
+                full_name: contactInfo.name || contactInfo.full_name
+            })
         })
-    })
-    if (!resp.ok) throw new Error('error to edit contact')
+        if (!resp.ok) throw new Error('error to edit contact')
         return true
-   } catch (error) {
-    console.log(error)
-   } 
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 contactApi.deleteContact = async (id) => {
     try {
-        const resp = await fetch(url+'/agendas/Robert/contacts/'+id, {
+        const resp = await fetch(url + '/agendas/Robert/contacts/' + id, {
             method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
             },
         })
-      if (!resp.ok) throw new Error('error to delete contact')
+        if (!resp.ok) throw new Error('error to delete contact')
         return true
     } catch (error) {
-    console.log(error)
+        console.log(error)
     }
-    
+
 }
 
 export default contactApi

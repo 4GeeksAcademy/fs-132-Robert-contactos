@@ -1,5 +1,5 @@
 import { useState } from "react";
-import  contactApi  from "../services/contactApi";
+import contactApi from "../services/contactApi";
 import { useNavigate } from "react-router-dom";
 
 const NewContact = () => {
@@ -27,14 +27,48 @@ const NewContact = () => {
 
     return (
         <div>
-            <h1>New Contact</h1>
-            <form onSubmit={handleSubmit} >
-                <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} />
-                <input type="text" className="form-control" name="phone" value={formData.phone} onChange={handleChange} />
-                <input type="text" className="form-control" name="email" value={formData.email} onChange={handleChange} />
-                <input type="text" className="form-control" name="address" value={formData.address} onChange={handleChange} />
-                <input type="submit" />
-            </form>
+            <div className="container mt-5 d-flex justify-content-center">
+                <div className="w-50">
+
+                    <h1>New Contact</h1>
+                    <form onSubmit={handleSubmit} >
+                        <input
+                            type="text"
+                            className="form-control mb-2"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Nombre"
+                            required
+                        />
+                        <input type="text"
+                            className="form-control mb-2"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="Teléfono"
+                        />
+                        <input
+                            type="email"
+                            className="form-control mb-2"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="Email"
+                        />
+                        <input type="text"
+                            className="form-control mb-2"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            placeholder="Dirección"
+                        />
+                        <button type="submit" className="btn btn-primary btn-lg w-100">
+                            💾 Save Contact
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }
